@@ -14,6 +14,12 @@ class Signuppage : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_signuppage)
         val spinnerFaculty = findViewById<Spinner>(R.id.spinnerFaculty)
+        val name = findViewById<EditText>(R.id.name)
+        val email = findViewById<EditText>(R.id.email)
+        val password = findViewById<EditText>(R.id.password)
+        val confirmPassword = findViewById<EditText>(R.id.confirmPassword)
+        val phone = findViewById<EditText>(R.id.phone)
+        val signup = findViewById<Button>(R.id.btnSignUp)
         val faculties = arrayOf(
             "Choose Your Faculty",
             "Faculty of Computer and Information Sciences",
@@ -40,6 +46,32 @@ class Signuppage : AppCompatActivity() {
         )
 
         spinnerFaculty.adapter = adapter
+signup.setOnClickListener {
+    val name = name.text.toString()
+    val email = email.text.toString()
+    val password = password.text.toString()
+    val phone = phone.text.toString()
+    val faculty = spinnerFaculty.selectedItem.toString()
+    if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty() || faculty == "Choose Your Faculty") {
+        Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+    } else {
+        if (email.contains("@")) {
+            Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+            return@setOnClickListener
+        }
+        if (password != confirmPassword.text.toString()) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            return@setOnClickListener
+        }
+        if (phone.length != 11) {
+            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+            return@setOnClickListener
+        }
 
+        user_database.getinstance(this).userDao().signUp(User(name, email, password, phone, faculty))
+        Toast.makeText(this, "Sign up successful", Toast.LENGTH_SHORT).show()
+       intent = Intent(this, HomeActivity::class.java)
+    }
+}
     }
 }
