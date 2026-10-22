@@ -30,22 +30,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="Lost &amp; Found"
         android:textColor="#536B87"
-        android:textSize="23sp"
+        android:textSize="25sp"
         android:gravity="center" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/location" />
-    <ImageView
         android:id="@+id/asuLogo"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/logo_asu"
         android:scaleType="fitCenter"
