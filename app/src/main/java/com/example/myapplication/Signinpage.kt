@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Signinpage : AppCompatActivity() {
 
@@ -36,46 +38,40 @@ class Signinpage : AppCompatActivity() {
                 ).show()
 
                 return@setOnClickListener
-            }
-
-            lifecycleScope.launch {
+            } else {
+                lifecycleScope.launch(Dispatchers.IO) {
 
                     val user = user_database.getinstance(this@Signinpage)
                         .userDao()
-                        .signIn(userEmail,userPassword)
+                        .signIn(userEmail, userPassword)
+                    withContext(Dispatchers.Main) {
+                        if (user != null) {
+                            Toast.makeText(
+                                this@Signinpage,
+                                "Sign in successful",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val homeIntent = Intent(
+                                this@Signinpage,
+                                HomeActivity::class.java
+                            )
+                            startActivity(homeIntent)
+                            finish()
 
-                    if (user != null) {
-                        Toast.makeText(
-                            this@Signinpage,
-                            "Sign in successful",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val homeIntent = Intent(
-                            this@Signinpage,
-                            HomeActivity::class.java
-                        )
-                        startActivity(homeIntent)
-                        finish()
+                        } else {
 
-                    } else {
+                            Toast.makeText(
+                                this@Signinpage,
+                                "Invalid email or password",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
-                        Toast.makeText(
-                            this@Signinpage,
-                            "Invalid email or password",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
 
                 }
-
-                    Toast.makeText(
-                        this@Signinpage,
-                        "Sign in failed",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
             }
         }
-
-
+    }
+}
 

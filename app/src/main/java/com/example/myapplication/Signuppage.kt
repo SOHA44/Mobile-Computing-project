@@ -10,12 +10,10 @@ import android.widget.EditText
 import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.R
-import com.example.myapplication.User
-import com.example.myapplication.user_database
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.withContext
+
 
 class Signuppage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +62,7 @@ signup.setOnClickListener {
     if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty() || faculty == "Choose Your Faculty") {
         Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
     } else {
-        if (email.contains("@")) {
+        if (!email.contains("@")) {
             Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
             return@setOnClickListener
         }
@@ -76,29 +74,23 @@ signup.setOnClickListener {
             Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
             return@setOnClickListener
         }
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
                 val user = User(name =name, email = email, password = password, phoneNumber =  phone, faculty = faculty)
                 user_database.getinstance(this@Signuppage)
                     .userDao()
                     .signUp(user)
-
+            withContext(Dispatchers.Main) {
                 Toast.makeText(
                     this@Signuppage,
                     "Sign up successful",
                     Toast.LENGTH_SHORT
                 ).show()
-
-                startActivity(Intent(this@Signuppage, Signinpage::class.java))
+                startActivity(Intent(this@Signuppage, HomeActivity::class.java))
                 finish()
 
             }
-                Toast.makeText(
-                    this@Signuppage,
-                    "Sign up failed",
-                    Toast.LENGTH_LONG
-                ).show()
             }
-        }
-       intent = Intent(this, HomeActivity::class.java)
+        }}
+
     }
 }
