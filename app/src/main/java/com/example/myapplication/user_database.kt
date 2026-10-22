@@ -1,6 +1,12 @@
 package com.example.myapplication
-@database(entities = [User::class], version = 1)
-abstract class user_database {
+import android.content.Context
+import androidx.room.RoomDatabase
+import androidx.room.Room
+import androidx.room.Database
+
+@Database
+(entities = [User::class], version = 1)
+abstract class user_database : RoomDatabase() {
     abstract fun userDao(): user_dao
 
     companion object{

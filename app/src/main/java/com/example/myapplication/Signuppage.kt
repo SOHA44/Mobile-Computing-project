@@ -5,6 +5,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Button
+import android.widget.EditText
+import android.content.Intent
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.R
+import com.example.myapplication.User
+import com.example.myapplication.user_database
+import kotlinx.coroutines.launch
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -67,11 +76,29 @@ signup.setOnClickListener {
             Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
             return@setOnClickListener
         }
+        lifecycleScope.launch {
+                val user = User(name =name, email = email, password = password, phoneNumber =  phone, faculty = faculty)
+                user_database.getinstance(this@Signuppage)
+                    .userDao()
+                    .signUp(user)
 
-        user_database.getinstance(this).userDao().signUp(User(name, email, password, phone, faculty))
-        Toast.makeText(this, "Sign up successful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@Signuppage,
+                    "Sign up successful",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                startActivity(Intent(this@Signuppage, Signinpage::class.java))
+                finish()
+
+            }
+                Toast.makeText(
+                    this@Signuppage,
+                    "Sign up failed",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
        intent = Intent(this, HomeActivity::class.java)
-    }
-}
     }
 }
