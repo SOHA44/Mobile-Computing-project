@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:background="#F4F7FC"
     android:padding="24dp"
     tools:context=".sign_page">
@@ -59,7 +59,7 @@
 
 
     <TextView
-        android:id="@+id/txtFooter"
+        android:id="@+id/txtfooter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"

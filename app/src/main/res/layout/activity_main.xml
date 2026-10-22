@@ -7,20 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:gravity="center"
    android:background="@color/white"
     android:padding="24dp"
     tools:context=".Welcome_page">
 
 
-    <ImageView
-        android:id="@+id/asuLogo"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_asu"
-        android:scaleType="fitCenter"
-    />
+
 
     <TextView
         android:id="@+id/title"
@@ -43,20 +36,20 @@
         android:textSize="23sp"
         android:gravity="center" />
 
-
     <ImageView
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:contentDescription="Search for lost items"
+        android:layout_marginTop="10dp"
         android:src="@drawable/location" />
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:contentDescription="Search for lost items"
-            android:src="@drawable/images" />
-
+    <ImageView
+        android:id="@+id/asuLogo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo_asu"
+        android:scaleType="fitCenter"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -81,7 +74,7 @@ Find it. Report it. Get it back!\n"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#477FE0"
+        android:backgroundTint="#315B8A"
     />
     <TextView
         android:id="@+id/txtfooter"

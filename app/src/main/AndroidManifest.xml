@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_asu"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_asu"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
@@ -23,6 +23,10 @@
         </activity>
         <activity
             android:name=".sign_page"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Signinpage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
