@@ -18,6 +18,11 @@ class sign_page : AppCompatActivity() {
             val intent = Intent(this, Signinpage::class.java)
             startActivity(intent)
         }
+        val signupbtn = findViewById<Button>(R.id.btnSignUp)
+        signupbtn.setOnClickListener {
+            val intent = Intent(this, Signuppage::class.java)
+            startActivity(intent)
+        }
     }
 }
 

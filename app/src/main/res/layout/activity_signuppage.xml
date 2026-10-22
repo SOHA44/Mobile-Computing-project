@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    android:padding="24dp">
+    <ImageView
+        android:id="@+id/asuLogo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo_asu"
+        android:scaleType="fitCenter"
+        />
+    <TextView
+        android:id="@+id/txtappname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Sign UP "
+        android:textColor="#7FA2D3"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:hint="Email"/>
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:hint="Password"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:hint="Confirm Password"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:hint="Phone Number"
+        />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#7FA2D3"
+        android:text="Create A NEW ACCOUNT "
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:cornerRadius="12dp" />
+    <TextView
+        android:id="@+id/txtfooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ain Shams University"
+        android:textColor="#68778D"
+        android:textSize="14sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
