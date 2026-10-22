@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#F4F7FC"
+    android:padding="24dp"
+    tools:context=".sign_page">
+
+    <TextView
+        android:id="@+id/txtappname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="ASU Lost &amp; Found"
+        android:textColor="#315B8A"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Find what you've lost.&#10;Help others find their belongings."
+        android:textColor="#68778D"
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="65dp"
+        android:backgroundTint="#315B8A"
+        android:text="Sign In"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:cornerRadius="12dp" />
+
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#7FA2D3"
+        android:text="Create Account"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:cornerRadius="12dp" />
+
+
+    <TextView
+        android:id="@+id/txtFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Ain Shams University"
+        android:textColor="#68778D"
+        android:textSize="14sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
