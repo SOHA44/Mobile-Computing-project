@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -19,7 +24,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+
+
             </intent-filter>
+
         </activity>
         <activity
             android:name=".sign_page"
@@ -46,5 +55,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
+
+
 
 </manifest>

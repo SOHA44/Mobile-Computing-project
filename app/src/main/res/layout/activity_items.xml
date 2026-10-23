@@ -1,106 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-
-    android:layout_height="match_parent">
-
-    <RadioGroup
-        android:layout_width="391dp"
-        android:layout_height="85dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" >
-
-        <RadioButton
-            android:id="@+id/found_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FOUND" />
-
-        <RadioButton
-            android:id="@+id/lost_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOST" />
-    </RadioGroup>
-
-    <EditText
-        android:layout_marginTop="50dp"
-        android:id="@+id/etname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Name"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="147dp" />
-
-    <EditText
-        android:id="@+id/etdescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="description"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="231dp" />
-
-    <EditText
-        android:id="@+id/et_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="location"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="319dp" />
-
-    <EditText
-        android:id="@+id/et_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:focusable="false"
-        android:clickable="true"
-        android:inputType="none"
-        android:hint="date"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="413dp" />
-    <EditText
-        android:id="@+id/et_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        android:hint="contact info"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="413dp" />
+    android:background="#FFF9FC">
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/outline_add_a_photo_24" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="333dp"
-        android:layout_height="197dp"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="501dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-
-    <Button
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="save"
-        android:layout_gravity="center"
-
+        android:id="@+id/back_btn"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_back_button"
+        android:contentDescription="Back"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_back_blue"
         />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Report an Item"
+                android:textColor="#254A91"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Help your belongings find their way back."
+                android:textColor="#77778A"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"/>
+
+            <RadioGroup
+                android:id="@+id/item_type_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <RadioButton
+                    android:id="@+id/found_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FOUND"
+                    android:textColor="#254A91"/>
+
+                <RadioButton
+                    android:id="@+id/lost_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOST"
+                    android:textColor="#254A91"
+                    android:layout_marginStart="24dp"/>
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/etname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item name"
+                android:inputType="textCapSentences"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#3978D4"/>
+
+            <EditText
+                android:id="@+id/etdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="2"
+                android:gravity="top"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#3978D4"/>
+
+            <EditText
+                android:id="@+id/et_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="textCapSentences"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#3978D4"/>
+
+            <EditText
+                android:id="@+id/et_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Choose date"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
+                android:cursorVisible="false"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#3978D4"/>
+
+            <EditText
+                android:id="@+id/et_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact info"
+                android:inputType="phone"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#3978D4"/>
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Take item photo"
+                android:src="@drawable/outline_add_a_photo_24"
+                android:backgroundTint="#E1EDFF"
+                app:tint="#254A91"
+                android:scaleType="centerInside"
+                android:padding="12dp"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="18dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Selected item photo"
+                android:background="#EAF0F8"/>
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:text="Save Item"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:backgroundTint="#2878D0"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

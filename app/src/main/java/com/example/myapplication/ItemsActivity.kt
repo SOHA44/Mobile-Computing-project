@@ -16,14 +16,16 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.app.DatePickerDialog
+import java.util.Calendar
 
 class ItemsActivity : AppCompatActivity() {
     private var photoPath: String = ""
     private val cameraLauncher =
         registerForActivityResult(
             androidx.activity.result.contract.ActivityResultContracts
-                .StartActivityForResult()
-        ) { result ->
+                .StartActivityForResult()) {
+            result ->
             if (result.resultCode == RESULT_OK) {
                 val bitmap = result.data?.extras?.get("data") as? android.graphics.Bitmap
                 if (bitmap != null) {
@@ -50,28 +52,31 @@ class ItemsActivity : AppCompatActivity() {
         val camera = findViewById<ImageButton>(R.id.imageButton)
         val save_button = findViewById<Button>(R.id.save_btn)
         val item_db = Itemdatabase.getInstance(this)
+        val back=findViewById< ImageButton>(R.id.back_btn)
+        date.setOnClickListener {
+            val c = Calendar.getInstance()
+            val dialog = DatePickerDialog(this, { _, year, month, day -> date.setText(String.format("%02d/%02d/%04d", day, month + 1, year))
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
+            )
+            dialog.datePicker.maxDate = System.currentTimeMillis()
+            dialog.show()
+        }
+        camera.setOnClickListener {
+            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(intent)
+        }
+
         save_button.setOnClickListener {
             val item_name = name.text.toString().trim()
             val item_description = description.text.toString().trim()
             val item_location = location.text.toString().trim()
             val item_date = date.text.toString().trim()
             val item_contact = contact.text.toString().trim()
-            if (
-                item_name.isEmpty() ||
-                item_description.isEmpty() ||
-                item_location.isEmpty() ||
-                item_date.isEmpty() ||
-                item_contact.isEmpty()
-            ) {
-                Toast.makeText(
-                    this,
-                    "Please fill all fields",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            } else {
+            if (item_name.isEmpty() || item_description.isEmpty() || item_location.isEmpty() || item_date.isEmpty() || item_contact.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener}
+             else {
                 lifecycleScope.launch {
-
                     withContext(Dispatchers.IO) {
                         item_db.itemDao().insertItem(
                             Items(
@@ -80,14 +85,8 @@ class ItemsActivity : AppCompatActivity() {
                                 photo = photoPath,
                                 date = item_date,
                                 location = item_location,
-                                contactInfo = item_contact
-                            )
-                        )
-                        Toast.makeText(
-                            this@ItemsActivity,
-                            "Item saved successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                                contactInfo = item_contact))}
+                        Toast.makeText(this@ItemsActivity, "Item saved successfully", Toast.LENGTH_SHORT).show()
                         name.text.clear()
                         description.text.clear()
                         location.text.clear()
@@ -95,13 +94,11 @@ class ItemsActivity : AppCompatActivity() {
                         contact.text.clear()
                         photoPath = ""
                         image.setImageDrawable(null)
-                    }
+
                 }
-                camera.setOnClickListener {
-                    intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivity(intent)
-                }
+
             }
         }
+        back.setOnClickListener { finish() }
 
     }}
