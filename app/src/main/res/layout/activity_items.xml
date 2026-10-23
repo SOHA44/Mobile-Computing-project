@@ -1,10 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ItemsActivity">
+    android:orientation="vertical"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:layout_width="391dp"
+        android:layout_height="85dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" >
+
+        <RadioButton
+            android:id="@+id/found_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FOUND" />
+
+        <RadioButton
+            android:id="@+id/lost_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOST" />
+    </RadioGroup>
+
+    <EditText
+        android:layout_marginTop="50dp"
+        android:id="@+id/etname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Name"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="147dp" />
+
+    <EditText
+        android:id="@+id/etdescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="description"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="231dp" />
+
+    <EditText
+        android:id="@+id/et_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="location"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="319dp" />
+
+    <EditText
+        android:id="@+id/et_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="none"
+        android:hint="date"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="413dp" />
+    <EditText
+        android:id="@+id/et_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="contact info"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="413dp" />
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/outline_add_a_photo_24" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="333dp"
+        android:layout_height="197dp"
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="501dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:layout_gravity="center"
+
+        />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
