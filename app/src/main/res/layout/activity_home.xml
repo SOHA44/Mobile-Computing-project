@@ -1,40 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#F5F7FA"
     tools:context=".HomeActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Lost &amp; Found"
+        android:textColor="#111827"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/notification"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/notification"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/profile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/notification" />
+
+    <ImageView
+        android:id="@+id/profile"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile" />
 
     <LinearLayout
-        android:id="@+id/navigate_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_add_button"
-        android:clickable="true"
-        android:elevation="6dp"
-        android:focusable="true"
-        android:gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="28dp">
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_add_white" />
+            android:src="@android:drawable/ic_menu_search"
+            app:tint="#4B5563" />
 
-
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:hint="Search items..."
+            android:textColor="#4B5563"
+            android:textSize="15sp" />
     </LinearLayout>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <Button
+        android:id="@+id/all"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="All"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:backgroundTint="#1E6FE8"
+        app:cornerRadius="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:strokeColor="#1E6FE8"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/lost"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Lost"
+        android:textAllCaps="false"
+        android:textColor="#111827"
+        android:textSize="14sp"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="22dp"
+        app:layout_constraintStart_toEndOf="@+id/all"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:strokeColor="#D1D5DB"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/found"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Found"
+        android:textAllCaps="false"
+        android:textColor="#111827"
+        android:textSize="14sp"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="22dp"
+        app:layout_constraintStart_toEndOf="@+id/lost"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:strokeColor="#D1D5DB"
+        app:strokeWidth="1dp" />
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="410dp"
+        android:layout_height="525dp"
+        android:clipToPadding="false"
+        android:horizontalSpacing="12dp"
+        android:numColumns="2"
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="96dp"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/all"
+        app:layout_constraintVertical_bias="0.898" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:elevation="6dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="22dp"
+        android:text="Add"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#1C6DE6"
+        app:cornerRadius="28dp"
+        app:icon="@android:drawable/ic_input_add"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

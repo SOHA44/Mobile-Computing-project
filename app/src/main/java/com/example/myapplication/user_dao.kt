@@ -6,7 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-interface user_dao {
+interface  user_dao {
     @Insert
     suspend fun signUp(user: User)
     @Query("SELECT * FROM users WHERE email = :email And password = :password")

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.content.Intent
 import android.widget.Toast
+import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

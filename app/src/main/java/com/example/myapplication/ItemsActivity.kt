@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.app.DatePickerDialog
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import java.util.Calendar
 
@@ -62,6 +63,9 @@ class ItemsActivity : AppCompatActivity() {
         val camera = findViewById<ImageButton>(R.id.imageButton)
         val save_button = findViewById<Button>(R.id.save_btn)
         val typeGroup = findViewById<RadioGroup>(R.id.item_type_group)
+        val item_found=findViewById<RadioButton>(R.id.found_btn)
+        val item_lost=findViewById<RadioButton>(R.id.lost_btn)
+        var item_type="found"
         val item_db = AppDatabase.getInstance(this)
         val back=findViewById< ImageButton>(R.id.back_btn)
         date.setOnClickListener {
@@ -83,6 +87,10 @@ class ItemsActivity : AppCompatActivity() {
             val item_location = location.text.toString().trim()
             val item_date = date.text.toString().trim()
             val item_contact = contact.text.toString().trim()
+            if(item_found.isChecked)
+                item_type="found"
+            else if(item_lost.isChecked)
+                item_type="lost"
             if (item_name.isEmpty() || item_description.isEmpty() || item_location.isEmpty() || item_date.isEmpty() || item_contact.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener}
@@ -98,7 +106,7 @@ class ItemsActivity : AppCompatActivity() {
                                 location = item_location,
                                 contactInfo = item_contact,
                                 ownerUserId = userId,
-                                type = itemType))}
+                                type = item_type))}
                         Toast.makeText(this@ItemsActivity, "Item saved successfully", Toast.LENGTH_SHORT).show()
                         name.text.clear()
                         description.text.clear()

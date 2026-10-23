@@ -14,7 +14,6 @@ import java.sql.Date
               onDelete = ForeignKey.CASCADE
                      )]
 )
-
 data class Items(
     @PrimaryKey(autoGenerate = true) val id: Int=0,
     val name: String,

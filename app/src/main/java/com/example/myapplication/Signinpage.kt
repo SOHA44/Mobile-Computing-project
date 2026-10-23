@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,6 +56,8 @@ class Signinpage : AppCompatActivity() {
                                 this@Signinpage,
                                 HomeActivity::class.java
                             )
+                            homeIntent.putExtra("userId", user.id)
+
                             startActivity(homeIntent)
                             finish()
 
