@@ -76,7 +76,7 @@ signup.setOnClickListener {
         }
         lifecycleScope.launch(Dispatchers.IO) {
                 val user = User(name =name, email = email, password = password, phoneNumber =  phone, faculty = faculty)
-                user_database.getinstance(this@Signuppage)
+            AppDatabase.getInstance(this@Signuppage)
                     .userDao()
                     .signUp(user)
             withContext(Dispatchers.Main) {

@@ -41,7 +41,7 @@ class Signinpage : AppCompatActivity() {
             } else {
                 lifecycleScope.launch(Dispatchers.IO) {
 
-                    val user = user_database.getinstance(this@Signinpage)
+                    val user = AppDatabase.getInstance(this@Signinpage)
                         .userDao()
                         .signIn(userEmail, userPassword)
                     withContext(Dispatchers.Main) {
