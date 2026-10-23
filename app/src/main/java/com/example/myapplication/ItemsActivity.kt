@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.app.DatePickerDialog
+import android.widget.RadioGroup
 import java.util.Calendar
 
 class ItemsActivity : AppCompatActivity() {
@@ -38,6 +39,15 @@ class ItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_items)
+
+       val userId = intent.getIntExtra("userId", -1)
+
+        if (userId == -1) {
+            Toast.makeText(this, "Invalid user ID", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -51,7 +61,8 @@ class ItemsActivity : AppCompatActivity() {
         val image = findViewById<ImageView>(R.id.imageView)
         val camera = findViewById<ImageButton>(R.id.imageButton)
         val save_button = findViewById<Button>(R.id.save_btn)
-        val item_db = Itemdatabase.getInstance(this)
+        val typeGroup = findViewById<RadioGroup>(R.id.item_type_group)
+        val item_db = AppDatabase.getInstance(this)
         val back=findViewById< ImageButton>(R.id.back_btn)
         date.setOnClickListener {
             val c = Calendar.getInstance()
@@ -85,13 +96,16 @@ class ItemsActivity : AppCompatActivity() {
                                 photo = photoPath,
                                 date = item_date,
                                 location = item_location,
-                                contactInfo = item_contact))}
+                                contactInfo = item_contact,
+                                ownerUserId = userId,
+                                type = itemType))}
                         Toast.makeText(this@ItemsActivity, "Item saved successfully", Toast.LENGTH_SHORT).show()
                         name.text.clear()
                         description.text.clear()
                         location.text.clear()
                         date.text.clear()
                         contact.text.clear()
+                        typeGroup.clearCheck()
                         photoPath = ""
                         image.setImageDrawable(null)
 

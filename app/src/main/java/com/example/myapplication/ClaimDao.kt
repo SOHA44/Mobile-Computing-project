@@ -19,8 +19,8 @@ interface claim_dao {
     @Query("SELECT * FROM claims WHERE status = :status")
     suspend fun getClaimsByStatus(status: String): List<Claim>
 
-//    @Query("SELECT * FROM claims WHERE itemId = :itemId")
-//    suspend fun getClaimsForItem(itemId: Int): List<Claim>
+    @Query("SELECT * FROM claims WHERE itemId = :itemId")
+    suspend fun getClaimsForItem(itemId: Int): List<Claim>
 
     @Query("SELECT * FROM claims WHERE claimantUserId = :userId")
     suspend fun getClaimsByUser(userId: Int): List<Claim>

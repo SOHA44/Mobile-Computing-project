@@ -12,6 +12,13 @@ interface ItemsDao{
     suspend fun insertItem(item: Items)
     @Query("SELECT * FROM items")
     suspend fun getAllItems (): List<Items>
+
+    @Query("SELECT * FROM items WHERE id = :itemId")
+    suspend fun getItemById(itemId: Int): Items?
+
+    @Query("SELECT * FROM items WHERE ownerUserId = :userId")
+    suspend fun getItemsByOwner(userId: Int): List<Items>
+
     @Update
     suspend fun updateItem(item: Items)
     @Delete
