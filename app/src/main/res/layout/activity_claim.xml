@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F7F8FC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Claim Item"
+            android:textColor="#172554"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit a request if you believe this item belongs to you."
+            android:textColor="#64748B"
+            android:textSize="15sp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Claiming item"
+            android:textColor="#172554"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvClaimItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:padding="14dp"
+            android:background="#E8EDF7"
+            android:text="Loading item..."
+            android:textColor="#172554"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your name"
+            android:textColor="#172554"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvClaimantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:padding="14dp"
+            android:background="#E8EDF7"
+            android:text="Loading name..."
+            android:textColor="#172554"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Why is this item yours?"
+            android:textColor="#172554"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etClaimMessage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="top"
+            android:hint="Describe a unique detail that can verify ownership..."
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="12dp"
+            android:backgroundTint="#64748B" />
+
+        <Button
+            android:id="@+id/btnSubmitClaim"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Submit Claim"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#1D4ED8"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Your request will be reviewed before the item is returned."
+            android:textColor="#64748B"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</ScrollView>
