@@ -76,22 +76,50 @@ signup.setOnClickListener {
             return@setOnClickListener
         }
         lifecycleScope.launch(Dispatchers.IO) {
-                val user = User(name =name, email = email, password = password, phoneNumber =  phone, faculty = faculty)
+            val user = AppDatabase.getInstance(this@Signuppage)
+                .userDao()
+                .validate(email)
+
+            if (user != null) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@Signuppage,
+                        "User already exists",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    val intent = Intent(this@Signuppage, Signinpage::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                return@launch
+            }
+
+            val newuser = User(
+                name = name,
+                email = email,
+                password = password,
+                phoneNumber = phone,
+                faculty = faculty
+            )
+
             AppDatabase.getInstance(this@Signuppage)
-                    .userDao()
-                    .signUp(user)
+                .userDao()
+                .signUp(newuser)
+
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                     this@Signuppage,
                     "Sign up successful",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 startActivity(Intent(this@Signuppage, HomeActivity::class.java))
                 finish()
-
             }
-            }
-        }}
+        }
+    }
 
     }
+}
 }

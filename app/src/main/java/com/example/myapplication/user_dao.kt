@@ -11,6 +11,8 @@ interface  user_dao {
     suspend fun signUp(user: User)
     @Query("SELECT * FROM users WHERE email = :email And password = :password")
     suspend fun signIn(email: String, password: String): User?
+    @Query("SELECT * FROM users WHERE email = :email" )
+    suspend fun validate(email: String): User?
     @Update
     suspend fun updateUser(user: User)
     @Delete
