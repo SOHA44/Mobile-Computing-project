@@ -1,6 +1,9 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -8,6 +11,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.SimpleAdapter
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,25 +22,60 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.graphics.toColorInt
 
 class HomeActivity : AppCompatActivity() {
 
-
     override fun onResume() {
         super.onResume()
-        val items = findViewById<GridView>(R.id.gridView)
+        val grid = findViewById<GridView>(R.id.gridView)
         lifecycleScope.launch {
-            val names = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(this@HomeActivity)
-                    .itemDao()
-                    .getAllItems()
-                    .map { it.name }
+            val list = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(this@HomeActivity).itemDao().getAllItems()
             }
-            items.adapter = ArrayAdapter(
+
+            val data = list.map {
+                mapOf("photo" to it.photo, "name" to it.name, "location" to it.location,"type" to it.type)
+            }
+
+            val adapter = SimpleAdapter(
                 this@HomeActivity,
-                android.R.layout.simple_list_item_1,
-                names
+                data,
+                R.layout.item_grid,
+                arrayOf("photo", "name", "location","type"),
+                intArrayOf(R.id.itemImage, R.id.itemName, R.id.itemLocation,R.id.itemType)
             )
+
+            adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
+                when {
+                    view is ImageView -> {
+                        val path = value as String
+                        if (path.isNotEmpty()) {
+                            view.setImageBitmap(BitmapFactory.decodeFile(path))
+                        } else {
+                            view.setImageDrawable(null)
+                        }
+                        true
+                    }
+                    view.id == R.id.itemType -> {
+                        val type = view as TextView
+                        if (value == "lost") {
+                            type.text = "Lost"
+                            type.setTextColor("#8A3B12".toColorInt())
+                            type.backgroundTintList = ColorStateList.valueOf("#FDE6D3".toColorInt())
+                        } else {
+                            type.text = "Found"
+                            type.setTextColor("#1E5A3C".toColorInt())
+                            type.backgroundTintList = ColorStateList.valueOf("#D8EFE3".toColorInt())
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+            grid.adapter = adapter
+
+            //grid.onItemSelectedListener
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
