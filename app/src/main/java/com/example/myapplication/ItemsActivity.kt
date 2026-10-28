@@ -25,17 +25,17 @@ class ItemsActivity : AppCompatActivity() {
     private var photoPath: String = ""
     private val cameraLauncher =
         registerForActivityResult(
-            androidx.activity.result.contract.ActivityResultContracts
-                .StartActivityForResult()) {
-            result ->
-            if (result.resultCode == RESULT_OK) {
-                val bitmap = result.data?.extras?.get("data") as? android.graphics.Bitmap
-                if (bitmap != null) {
-                    findViewById<ImageView>(R.id.imageView)
-                        .setImageBitmap(bitmap)
-                }
+            androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK && photoPath.isNotEmpty()) {
+                val bitmap = android.graphics.BitmapFactory.decodeFile(photoPath)
+                findViewById<ImageView>(R.id.imageView).setImageBitmap(bitmap)
+            } else {
+                photoPath = ""
             }
         }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -77,8 +77,17 @@ class ItemsActivity : AppCompatActivity() {
             dialog.show()
         }
         camera.setOnClickListener {
-            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraLauncher.launch(intent)
+            val dir = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES)
+            val file = java.io.File.createTempFile("IMG_", ".jpg", dir)
+            photoPath = file.absolutePath
+
+            val uri = androidx.core.content.FileProvider.getUriForFile(
+                this, "${applicationContext.packageName}.fileprovider", file
+            )
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            }
+            cameraLauncher.launch(cameraIntent)
         }
 
         save_button.setOnClickListener {
@@ -91,7 +100,7 @@ class ItemsActivity : AppCompatActivity() {
                 item_type="found"
             else if(item_lost.isChecked)
                 item_type="lost"
-            if (item_name.isEmpty() || item_description.isEmpty() || item_location.isEmpty() || item_date.isEmpty() || item_contact.isEmpty()) {
+            if (item_name.isEmpty() || item_description.isEmpty() || item_location.isEmpty() || item_date.isEmpty() || item_contact.isEmpty()||typeGroup.checkedRadioButtonId == -1) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener}
              else {
