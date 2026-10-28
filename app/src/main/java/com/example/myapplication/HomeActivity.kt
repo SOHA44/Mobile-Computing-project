@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SimpleAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -75,7 +76,12 @@ class HomeActivity : AppCompatActivity() {
             }
             grid.adapter = adapter
 
-            //grid.onItemSelectedListener
+            grid.setOnItemClickListener { _, _, position, _ ->
+                val itemId = list[position].id
+                val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
+                itemActivity.putExtra("itemId",itemId)
+                startActivity(itemActivity)
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,8 +110,9 @@ class HomeActivity : AppCompatActivity() {
 
 
         profile.setOnClickListener {
-//            intent= Intent(this, ProfileActivity::class.java)
-//            startActivity(intent)
+           val profileActivity= Intent(this, ProfileActivity::class.java)
+            profileActivity.putExtra("userId",userId)
+           startActivity(profileActivity)
         }
 
         notification.setOnClickListener {
@@ -118,6 +125,136 @@ class HomeActivity : AppCompatActivity() {
             addItem.putExtra("userId", userId)
             startActivity(addItem)
         }
+
+        found.setOnClickListener {
+            val grid = findViewById<GridView>(R.id.gridView)
+            lifecycleScope.launch {
+                val list = withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(this@HomeActivity).itemDao().getAllFoundItems()
+                }
+
+                val data = list.map {
+                    mapOf("photo" to it.photo, "name" to it.name, "location" to it.location,"type" to it.type)
+                }
+
+                val adapter = SimpleAdapter(
+                    this@HomeActivity,
+                    data,
+                    R.layout.item_grid,
+                    arrayOf("photo", "name", "location","type"),
+                    intArrayOf(R.id.itemImage, R.id.itemName, R.id.itemLocation,R.id.itemType)
+                )
+
+                adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
+                    when {
+                        view is ImageView -> {
+                            val path = value as String
+                            if (path.isNotEmpty()) {
+                                view.setImageBitmap(BitmapFactory.decodeFile(path))
+                            } else {
+                                view.setImageDrawable(null)
+                            }
+                            true
+                        }
+                        view.id == R.id.itemType -> {
+                            val type = view as TextView
+                            type.text = "Found"
+                            type.setTextColor("#1E5A3C".toColorInt())
+                            type.backgroundTintList = ColorStateList.valueOf("#D8EFE3".toColorInt())
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                grid.adapter = adapter
+
+                grid.setOnItemClickListener { _, _, position, _ ->
+                    val itemId = list[position].id
+                    val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
+                    itemActivity.putExtra("itemId",itemId)
+                    startActivity(itemActivity)
+                }
+                found.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
+                found.setTextColor(Color.WHITE)
+                all.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                all.setTextColor(Color.BLACK)
+                lost.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                lost.setTextColor(Color.BLACK)
+            }
+
+        }
+
+        lost.setOnClickListener {
+            val grid = findViewById<GridView>(R.id.gridView)
+            lifecycleScope.launch {
+                val list = withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(this@HomeActivity).itemDao().getAllLostItems()
+                }
+
+                val data = list.map {
+                    mapOf("photo" to it.photo, "name" to it.name, "location" to it.location,"type" to it.type)
+                }
+
+                val adapter = SimpleAdapter(
+                    this@HomeActivity,
+                    data,
+                    R.layout.item_grid,
+                    arrayOf("photo", "name", "location","type"),
+                    intArrayOf(R.id.itemImage, R.id.itemName, R.id.itemLocation,R.id.itemType)
+                )
+
+                adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
+                    when {
+                        view is ImageView -> {
+                            val path = value as String
+                            if (path.isNotEmpty()) {
+                                view.setImageBitmap(BitmapFactory.decodeFile(path))
+                            } else {
+                                view.setImageDrawable(null)
+                            }
+                            true
+                        }
+                        view.id == R.id.itemType -> {
+                            val type = view as TextView
+                            type.text = "Lost"
+                            type.setTextColor("#8A3B12".toColorInt())
+                            type.backgroundTintList = ColorStateList.valueOf("#FDE6D3".toColorInt())
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                grid.adapter = adapter
+
+                grid.setOnItemClickListener { _, _, position, _ ->
+                    val itemId = list[position].id
+                    val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
+                    itemActivity.putExtra("itemId",itemId)
+                    startActivity(itemActivity)
+                }
+
+                lost.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
+                lost.setTextColor(Color.WHITE)
+                all.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                all.setTextColor(Color.BLACK)
+                found.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                found.setTextColor(Color.BLACK)
+            }
+
+        }
+
+        all.setOnClickListener {
+            onResume()
+            all.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
+            all.setTextColor(Color.WHITE)
+            lost.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            lost.setTextColor(Color.BLACK)
+            found.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            found.setTextColor(Color.BLACK)
+        }
+
+
+
 
     }
 }

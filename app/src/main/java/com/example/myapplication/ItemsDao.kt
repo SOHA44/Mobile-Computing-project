@@ -13,6 +13,12 @@ interface ItemsDao{
     @Query("SELECT * FROM items")
     suspend fun getAllItems (): List<Items>
 
+    @Query("SELECT * FROM items WHERE type='found'")
+    suspend fun getAllFoundItems (): List<Items>
+
+    @Query("SELECT * FROM items WHERE type='lost'")
+    suspend fun getAllLostItems (): List<Items>
+
     @Query("SELECT * FROM items WHERE id = :itemId")
     suspend fun getItemById(itemId: Int): Items?
 
