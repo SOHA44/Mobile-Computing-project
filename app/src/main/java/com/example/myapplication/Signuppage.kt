@@ -56,7 +56,7 @@ class Signuppage : AppCompatActivity() {
         spinnerFaculty.adapter = adapter
 signup.setOnClickListener {
     val name = name.text.toString()
-    val email = email.text.toString()
+    val email = email.text.toString().trim().lowercase()
     val password = password.text.toString()
     val phone = phone.text.toString()
     val faculty = spinnerFaculty.selectedItem.toString()
@@ -103,18 +103,15 @@ signup.setOnClickListener {
                 faculty = faculty
             )
 
-            AppDatabase.getInstance(this@Signuppage)
+            val newId = AppDatabase.getInstance(this@Signuppage)
                 .userDao()
                 .signUp(newuser)
 
             withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    this@Signuppage,
-                    "Sign up successful",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                startActivity(Intent(this@Signuppage, HomeActivity::class.java))
+                Toast.makeText(this@Signuppage, "Sign up successful", Toast.LENGTH_SHORT).show()
+                val homeIntent = Intent(this@Signuppage, HomeActivity::class.java)
+                homeIntent.putExtra("userId", newId.toInt())
+                startActivity(homeIntent)
                 finish()
             }
         }

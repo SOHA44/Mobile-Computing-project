@@ -27,7 +27,7 @@ class Signinpage : AppCompatActivity() {
 
         signinbtn.setOnClickListener {
 
-            val userEmail = email.text.toString().trim()
+            val userEmail = email.text.toString().trim().lowercase()
             val userPassword = password.text.toString()
 
             if (userEmail.isEmpty() || userPassword.isEmpty()) {
