@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notificationRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F6FA"
+    android:padding="16dp">
+
+    <!-- Header -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:contentDescription="Back"
+            android:background="@android:color/transparent"
+            android:tint="#172033" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Notifications"
+            android:textColor="#172033"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp" />
+
+        <TextView
+            android:id="@+id/unreadCount"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/notification_count_background" />
+
+    </LinearLayout>
+
+    <!-- Mark all as read -->
+
+    <TextView
+        android:id="@+id/markAllRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="8dp"
+        android:text="Mark all read"
+        android:textColor="#1A73E8"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- Filters -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/allNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:minWidth="90dp"
+            android:text="All"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1A73E8" />
+
+        <Button
+            android:id="@+id/unreadNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:minWidth="100dp"
+            android:layout_marginStart="10dp"
+            android:text="Unread"
+            android:textAllCaps="false"
+            android:textColor="#172033"
+            android:backgroundTint="#FFFFFF" />
+
+    </LinearLayout>
+
+    <!-- Empty state -->
+
+    <TextView
+        android:id="@+id/emptyNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="No notifications yet."
+        android:textColor="#778196"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <!-- Notifications list -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notificationsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp" />
+
+</LinearLayout>
