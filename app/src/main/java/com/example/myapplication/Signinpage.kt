@@ -57,6 +57,7 @@ class Signinpage : AppCompatActivity() {
                                 HomeActivity::class.java
                             )
                             homeIntent.putExtra("userId", user.id)
+                            homeIntent.putExtra("userName", user.name)
 
                             startActivity(homeIntent)
                             finish()

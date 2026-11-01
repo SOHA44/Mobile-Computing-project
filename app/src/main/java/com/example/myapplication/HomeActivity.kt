@@ -26,6 +26,8 @@ import kotlinx.coroutines.withContext
 import androidx.core.graphics.toColorInt
 
 class HomeActivity : AppCompatActivity() {
+    private var currentuserId: Int = -1
+    private var currentusetname: String = ""
 
     override fun onResume() {
         super.onResume()
@@ -80,6 +82,8 @@ class HomeActivity : AppCompatActivity() {
                 val itemId = list[position].id
                 val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
                 itemActivity.putExtra("itemId",itemId)
+                itemActivity.putExtra("userId",currentuserId)
+                itemActivity.putExtra("userName",currentusetname)
                 startActivity(itemActivity)
             }
         }
@@ -94,7 +98,8 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        val userId = intent.getIntExtra("userId", -1)
+        currentuserId = intent.getIntExtra("userId", -1)
+        currentusetname = intent.getStringExtra("userName") ?: ""
 
         val profile =findViewById<View>(R.id.profile)
         val notification =findViewById<View>(R.id.notification)
@@ -111,7 +116,7 @@ class HomeActivity : AppCompatActivity() {
 
         profile.setOnClickListener {
            val profileActivity= Intent(this, ProfileActivity::class.java)
-            profileActivity.putExtra("userId",userId)
+            profileActivity.putExtra("userId",currentuserId)
            startActivity(profileActivity)
         }
 
@@ -122,7 +127,7 @@ class HomeActivity : AppCompatActivity() {
 
         adding_item.setOnClickListener {
             val addItem= Intent(this, ItemsActivity::class.java)
-            addItem.putExtra("userId", userId)
+            addItem.putExtra("userId", currentuserId)
             startActivity(addItem)
         }
 
@@ -172,6 +177,8 @@ class HomeActivity : AppCompatActivity() {
                     val itemId = list[position].id
                     val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
                     itemActivity.putExtra("itemId",itemId)
+                    itemActivity.putExtra("userId",currentuserId)
+                    itemActivity.putExtra("userName",currentusetname)
                     startActivity(itemActivity)
                 }
                 found.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
@@ -230,6 +237,8 @@ class HomeActivity : AppCompatActivity() {
                     val itemId = list[position].id
                     val itemActivity =Intent(this@HomeActivity,ItemActivity::class.java)
                     itemActivity.putExtra("itemId",itemId)
+                    itemActivity.putExtra("userId",currentuserId)
+                    itemActivity.putExtra("userName",currentusetname)
                     startActivity(itemActivity)
                 }
 
