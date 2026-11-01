@@ -52,14 +52,33 @@ class ClaimActivity : AppCompatActivity() {
                     Toast.makeText(this@ClaimActivity, "You cannot claim your own item", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-
-                val claim = Claim(itemId = itemId, claimantUserId = userId, claimantName = userName, message = message)
+                // Prevent multiple submissions while saving
+                submitButton.isEnabled = false
                 lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        AppDatabase.getInstance(this@ClaimActivity).claimDao().insertClaim(claim)
+                    try {
+                        withContext(Dispatchers.IO) { val db = AppDatabase.getInstance(this@ClaimActivity)
+                            // 1. Save the claim
+                            val claim = Claim(itemId = itemId, claimantUserId = userId, claimantName = userName, message = message)
+                            db.claimDao().insertClaim(claim)
+                            // 2. Notify the owner of the item
+                            val notification = NotificationEntity(
+                                userId = item.ownerUserId,
+                                title = "New Claim Request",
+                                message = "$userName has requested your item: ${item.name}",
+                                type = "CLAIM_REQUEST",
+                                itemId = itemId
+                            )
+                            db.notificationDao().insertNotification(notification)
+                        }
+                        Toast.makeText(
+                            this@ClaimActivity, "Claim submitted successfully", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } catch (e: Exception) {
+
+                        submitButton.isEnabled = true
+
+                        Toast.makeText(this@ClaimActivity, "Something went wrong: ${e.message}", Toast.LENGTH_LONG).show()
                     }
-                    Toast.makeText(this@ClaimActivity, "Claim submitted successfully", Toast.LENGTH_SHORT).show()
-                    finish()
                 }
             }
         }
