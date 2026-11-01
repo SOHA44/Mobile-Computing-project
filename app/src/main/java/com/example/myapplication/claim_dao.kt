@@ -28,6 +28,9 @@ interface claim_dao {
     @Query("SELECT * FROM claims WHERE id = :claimId")
     suspend fun getClaimById(claimId: Int): Claim?
 
+    @Query("SELECT claims.* FROM claims JOIN items ON claims.itemId = items.id WHERE items.ownerUserId = :userId")
+    suspend fun getClaimsForOwner(userId: Int): List<Claim>
+
     @Update
     suspend fun updateClaim(claim: Claim)
 
