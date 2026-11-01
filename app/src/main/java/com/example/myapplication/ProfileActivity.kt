@@ -19,8 +19,10 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val db= AppDatabase.getInstance(this)
-
-        val userId=intent.getIntExtra("userId",-1)
+        val sharedPreferences =
+            getSharedPreferences("shared_per", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", -1)
+//        val userId=intent.getIntExtra("userId",-1)
         val nameView=findViewById<TextView>(R.id.textView4)
 
         lifecycleScope.launch {

@@ -112,10 +112,12 @@ signup.setOnClickListener {
                 val sharedPreferences =
                     getSharedPreferences("shared_per", MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
-                editor.putBoolean("isloggedin", true)
-                editor.apply()
                 val homeIntent = Intent(this@Signuppage, HomeActivity::class.java)
                 homeIntent.putExtra("userId", newId.toInt())
+                editor.putBoolean("isloggedin", true)
+                editor.putInt("userId", newId.toInt())
+                editor.putString("userName", name)
+                editor.apply()
                 startActivity(homeIntent)
                 finish()
             }

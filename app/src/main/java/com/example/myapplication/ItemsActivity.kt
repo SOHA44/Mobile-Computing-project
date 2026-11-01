@@ -40,8 +40,11 @@ class ItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_items)
+        val sharedPreferences =
+            getSharedPreferences("shared_per", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", -1)
 
-       val userId = intent.getIntExtra("userId", -1)
+       //val userId = intent.getIntExtra("userId", -1)
 
         if (userId == -1) {
             Toast.makeText(this, "Invalid user ID", Toast.LENGTH_SHORT).show()
