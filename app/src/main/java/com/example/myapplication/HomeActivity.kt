@@ -102,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
         currentusetname = intent.getStringExtra("userName") ?: ""
 
         val profile =findViewById<View>(R.id.profile)
+        val log_out = findViewById<View>(R.id.logout)
         val notification =findViewById<View>(R.id.notification)
         val search =findViewById<EditText>(R.id.search)
 
@@ -118,6 +119,16 @@ class HomeActivity : AppCompatActivity() {
            val profileActivity= Intent(this, ProfileActivity::class.java)
             profileActivity.putExtra("userId",currentuserId)
            startActivity(profileActivity)
+        }
+
+        log_out.setOnClickListener {
+            val shared = getSharedPreferences("shared_per", MODE_PRIVATE)
+            val editor = shared.edit()
+            editor.putBoolean("isloggedin", false)
+            editor.apply()
+            val intent = Intent(this, sign_page::class.java)
+            startActivity(intent)
+            finish()
         }
 
         notification.setOnClickListener {
