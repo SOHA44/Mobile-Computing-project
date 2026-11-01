@@ -132,12 +132,12 @@ class HomeActivity : AppCompatActivity() {
         }
 
         notification.setOnClickListener {
-//            val receivedClaims = Intent(this, ReceivedClaimsActivity::class.java)
-//            receivedClaims.putExtra("userId", currentuserId)
-//            startActivity(receivedClaims)
-//            intent= Intent(this, NotificationActivity::class.java)
-//            startActivity(intent)
+
+            val notificationIntent = Intent(this@HomeActivity, NotificationActivity::class.java)
+            notificationIntent.putExtra("userId", currentuserId)
+            startActivity(notificationIntent)
         }
+
 
         adding_item.setOnClickListener {
             val addItem= Intent(this, ItemsActivity::class.java)

@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notificationRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,46 +12,49 @@
 
     <!-- Header -->
 
+    <!-- Mark all as read -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingVertical="8dp">
 
         <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:src="@android:drawable/ic_media_previous"
+            android:id="@+id/back_btn"
+            android:layout_width="45dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_back_button"
             android:contentDescription="Back"
-            android:background="@android:color/transparent"
-            android:tint="#172033" />
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back_blue" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="31dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:text="Notifications"
             android:textColor="#172033"
             android:textSize="23sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/unreadCount"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:background="@drawable/notification_count_background"
             android:gravity="center"
             android:text="0"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
-            android:textStyle="bold"
-            android:background="@drawable/notification_count_background" />
+            android:textStyle="bold" />
 
     </LinearLayout>
-
-    <!-- Mark all as read -->
 
     <TextView
         android:id="@+id/markAllRead"
