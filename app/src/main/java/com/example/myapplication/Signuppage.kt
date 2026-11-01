@@ -109,6 +109,11 @@ signup.setOnClickListener {
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@Signuppage, "Sign up successful", Toast.LENGTH_SHORT).show()
+                val sharedPreferences =
+                    getSharedPreferences("shared_per", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("isloggedin", true)
+                editor.apply()
                 val homeIntent = Intent(this@Signuppage, HomeActivity::class.java)
                 homeIntent.putExtra("userId", newId.toInt())
                 startActivity(homeIntent)

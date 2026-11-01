@@ -52,6 +52,11 @@ class Signinpage : AppCompatActivity() {
                                 "Sign in successful",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            val sharedPreferences =
+                                getSharedPreferences("shared_per", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putBoolean("isloggedin", true)
+                            editor.apply()
                             val homeIntent = Intent(
                                 this@Signinpage,
                                 HomeActivity::class.java

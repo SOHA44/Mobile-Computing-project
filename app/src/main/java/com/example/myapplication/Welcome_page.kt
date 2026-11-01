@@ -17,8 +17,17 @@ class Welcome_page : AppCompatActivity() {
         val btn = findViewById<Button>(R.id.btngetstarted)
 
         btn.setOnClickListener {
+            val shared_per = getSharedPreferences("shared_per", MODE_PRIVATE)
+            val isloggedin = shared_per.getBoolean("isloggedin",false)
+            if(isloggedin){
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+              else  {
             val intent = Intent(this, sign_page::class.java)
             startActivity(intent)
+        }
+            finish()
         }
     }
 }
