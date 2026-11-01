@@ -4,26 +4,47 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-@Database(entities = [User::class, Items::class, Claim::class], version = 1)
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+
+@Database(entities = [User::class, Items::class, Claim::class, NotificationEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): user_dao
     abstract fun itemDao(): ItemsDao
     abstract fun claimDao(): claim_dao
+    abstract fun notificationDao(): NotificationDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase {
-            if(INSTANCE==null){
-                synchronized(this)
-                {
-                    if(INSTANCE==null)
-                    {
-                        INSTANCE= Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "app_database").build()
-                    }
-                }
+
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                database.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `notifications` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `userId` INTEGER NOT NULL,
+                        `title` TEXT NOT NULL,
+                        `message` TEXT NOT NULL,
+                        `type` TEXT NOT NULL,
+                        `itemId` INTEGER,
+                        `createdAt` INTEGER NOT NULL,
+                        `isRead` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
             }
-            return INSTANCE!!
+        }
+        fun getInstance(context: Context): AppDatabase {
+
+            return INSTANCE ?: synchronized(this)
+            {
+                INSTANCE ?: Room.databaseBuilder(context.applicationContext,AppDatabase::class.java, "app_database")
+                    .addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
+            }
         }
     }
 }
