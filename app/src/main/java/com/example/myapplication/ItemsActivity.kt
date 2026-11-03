@@ -34,6 +34,15 @@ class ItemsActivity : AppCompatActivity() {
                 photoPath = ""
             }
         }
+    private val galleryLauncher =
+        registerForActivityResult(
+            androidx.activity.result.contract.ActivityResultContracts.GetContent()
+        ) { uri ->
+            if (uri != null) {
+                findViewById<ImageView>(R.id.imageView).setImageURI(uri)
+                photoPath = uri.toString()
+            }
+        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +73,7 @@ class ItemsActivity : AppCompatActivity() {
         val contact = findViewById<EditText>(R.id.et_number)
         val image = findViewById<ImageView>(R.id.imageView)
         val camera = findViewById<ImageButton>(R.id.imageButton)
+        val gallery = findViewById<ImageButton>(R.id.gallery_btn)
         val save_button = findViewById<Button>(R.id.save_btn)
         val typeGroup = findViewById<RadioGroup>(R.id.item_type_group)
         val item_found=findViewById<RadioButton>(R.id.found_btn)
@@ -91,6 +101,9 @@ class ItemsActivity : AppCompatActivity() {
                 putExtra(MediaStore.EXTRA_OUTPUT, uri)
             }
             cameraLauncher.launch(cameraIntent)
+        }
+        gallery.setOnClickListener {
+            galleryLauncher.launch("image/*")
         }
 
         save_button.setOnClickListener {
