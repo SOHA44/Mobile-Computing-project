@@ -52,9 +52,15 @@ class HomeActivity : AppCompatActivity() {
             adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
                 when {
                     view is ImageView -> {
-                        val path = value as String
-                        if (path.isNotEmpty()) {
-                            view.setImageBitmap(BitmapFactory.decodeFile(path))
+                        val photo = value as String
+
+                        if (photo.isNotEmpty()) {
+                            if (photo.startsWith("content://")) {
+                                view.setImageURI(android.net.Uri.parse(photo))
+                            } else {
+                                val bitmap = BitmapFactory.decodeFile(photo)
+                                view.setImageBitmap(bitmap)
+                            }
                         } else {
                             view.setImageDrawable(null)
                         }
@@ -175,9 +181,15 @@ class HomeActivity : AppCompatActivity() {
                 adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
                     when {
                         view is ImageView -> {
-                            val path = value as String
-                            if (path.isNotEmpty()) {
-                                view.setImageBitmap(BitmapFactory.decodeFile(path))
+                            val photo = value as String
+
+                            if (photo.isNotEmpty()) {
+                                if (photo.startsWith("content://")) {
+                                    view.setImageURI(android.net.Uri.parse(photo))
+                                } else {
+                                    val bitmap = BitmapFactory.decodeFile(photo)
+                                    view.setImageBitmap(bitmap)
+                                }
                             } else {
                                 view.setImageDrawable(null)
                             }
@@ -235,9 +247,15 @@ class HomeActivity : AppCompatActivity() {
                 adapter.viewBinder = SimpleAdapter.ViewBinder { view, value, _ ->
                     when {
                         view is ImageView -> {
-                            val path = value as String
-                            if (path.isNotEmpty()) {
-                                view.setImageBitmap(BitmapFactory.decodeFile(path))
+                            val photo = value as String
+
+                            if (photo.isNotEmpty()) {
+                                if (photo.startsWith("content://")) {
+                                    view.setImageURI(android.net.Uri.parse(photo))
+                                } else {
+                                    val bitmap = BitmapFactory.decodeFile(photo)
+                                    view.setImageBitmap(bitmap)
+                                }
                             } else {
                                 view.setImageDrawable(null)
                             }
