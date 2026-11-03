@@ -127,17 +127,36 @@
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#3978D4"/>
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="Take item photo"
-                android:src="@drawable/outline_add_a_photo_24"
-                android:backgroundTint="#E1EDFF"
-                app:tint="#254A91"
-                android:scaleType="centerInside"
-                android:padding="12dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="Take item photo"
+                    android:src="@drawable/outline_add_a_photo_24"
+                    android:backgroundTint="#E1EDFF"
+                    app:tint="#254A91"
+                    android:scaleType="centerInside"
+                    android:padding="12dp" />
+                <ImageButton
+                    android:id="@+id/gallery_btn"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="24dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:contentDescription="Choose from gallery"
+                    android:backgroundTint="#E1EDFF"
+                    app:tint="#254A91"
+                    android:scaleType="centerInside"
+                    android:padding="12dp" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageView"
