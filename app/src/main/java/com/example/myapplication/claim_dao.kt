@@ -31,6 +31,9 @@ interface claim_dao {
     @Query("SELECT claims.* FROM claims JOIN items ON claims.itemId = items.id WHERE items.ownerUserId = :userId")
     suspend fun getClaimsForOwner(userId: Int): List<Claim>
 
+    @Query("UPDATE claims SET status = 'REJECTED' WHERE itemId = :itemId AND id != :claimId")
+    suspend fun rejectOther(itemId: Int,claimId: Int)
+
     @Update
     suspend fun updateClaim(claim: Claim)
 

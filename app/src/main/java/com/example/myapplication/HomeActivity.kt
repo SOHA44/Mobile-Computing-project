@@ -104,6 +104,7 @@ class HomeActivity : AppCompatActivity() {
         val profile =findViewById<View>(R.id.profile)
         val log_out = findViewById<View>(R.id.logout)
         val notification =findViewById<View>(R.id.notification)
+        val receivedClaims =findViewById<View>(R.id.receivedClaims)
         val search =findViewById<EditText>(R.id.search)
 
         val all=findViewById<Button>(R.id.all)
@@ -137,6 +138,13 @@ class HomeActivity : AppCompatActivity() {
             notificationIntent.putExtra("userId", currentuserId)
             startActivity(notificationIntent)
         }
+
+        receivedClaims.setOnClickListener {
+            val claimsIntent = Intent(this@HomeActivity, ReceivedClaimsActivity::class.java)
+            claimsIntent.putExtra("userId", currentuserId)
+            startActivity(claimsIntent)
+        }
+
 
 
         adding_item.setOnClickListener {

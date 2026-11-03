@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.SimpleAdapter
@@ -36,21 +37,29 @@ class ReceivedClaimsActivity : AppCompatActivity() {
 
                 val claims = db.claimDao().getClaimsForOwner(userId)
 
-                claims.mapNotNull { claim ->
+                val list = mutableListOf<Map<String, Any>>()
+
+                for (claim in claims) {
+
                     val item = db.itemDao().getItemById(claim.itemId)
+
                     if (item != null) {
-                        mapOf(
+                        val claimData = mapOf(
                             "photo" to item.photo,
                             "itemName" to item.name,
                             "claimantName" to claim.claimantName,
                             "message" to claim.message,
-                            "status" to claim.status
+                            "status" to claim.status,
+                            "acceptData" to claim,
+                            "rejectData" to claim
                         )
-                    } else {
-                        null
+
+                        list.add(claimData)
                     }
                 }
+                list
             }
+
             if (list.isEmpty()) {
                 emptyMessage.visibility = View.VISIBLE
                 grid.visibility = View.GONE
@@ -62,8 +71,8 @@ class ReceivedClaimsActivity : AppCompatActivity() {
                 this@ReceivedClaimsActivity,
                 list,
                 R.layout.item_claim,
-                arrayOf("photo", "itemName", "claimantName", "message", "status"),
-                intArrayOf(R.id.claimItemImage, R.id.claimItemName, R.id.claimantName, R.id.claimMessage, R.id.claimStatus)
+                arrayOf("photo", "itemName", "claimantName", "message", "status","acceptData","rejectData"),
+                intArrayOf(R.id.claimItemImage, R.id.claimItemName, R.id.claimantName, R.id.claimMessage, R.id.claimStatus,R.id.btnAccept,R.id.btnReject)
             )
 
             adapter.viewBinder = SimpleAdapter.ViewBinder{ view, value, _ ->
@@ -103,6 +112,45 @@ class ReceivedClaimsActivity : AppCompatActivity() {
                         (view as TextView).text = "Claimed by: $value"
                         true
                     }
+
+                    view.id == R.id.btnAccept -> {
+                        val claim = value as Claim
+                        val actions = view.parent as View
+
+                        if(claim.status == "PENDING"){
+                            actions.visibility = View.VISIBLE
+                        }else{
+                            actions.visibility = View.GONE
+                        }
+
+                        (view as Button).setOnClickListener {
+                            lifecycleScope.launch {
+                                withContext(Dispatchers.IO){
+                                    val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
+                                    db.claimDao().updateClaimStatus(claim.id, "ACCEPTED")
+                                    db.claimDao().rejectOther(claim.itemId,claim.id)
+                                }
+                                recreate()
+                            }
+                        }
+                        true
+                    }
+
+                    view.id == R.id.btnReject -> {
+                        val claim = value as Claim
+
+                        (view as Button).setOnClickListener {
+                            lifecycleScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
+                                    db.claimDao().updateClaimStatus(claim.id, "REJECTED")
+                                }
+                                recreate()
+                            }
+                        }
+                        true
+                    }
+
                     else -> false
                 }
             }

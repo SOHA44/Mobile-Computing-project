@@ -67,4 +67,38 @@
         android:textColor="#374151"
         android:textSize="13sp" />
 
+    <LinearLayout
+        android:id="@+id/claimActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Accept"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#218653" />
+
+        <Button
+            android:id="@+id/btnReject"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Reject"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#DC3545" />
+
+    </LinearLayout>
+
 </LinearLayout>
