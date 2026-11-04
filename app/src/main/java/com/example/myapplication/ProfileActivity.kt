@@ -37,8 +37,8 @@ class ProfileActivity : AppCompatActivity() {
         val addClaimBtn = findViewById<Button>(R.id.btnAddClaim)
         val recievedClaimsBtn = findViewById<Button>(R.id.btnRecievedClaims)
         val notificationsBtn = findViewById<RelativeLayout>(R.id.notificationsProfile)
-
-
+        val signOutBtn = findViewById<RelativeLayout>(R.id.signOutProfile)
+        
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val user = db.userDao().getUser(userId)
@@ -84,6 +84,14 @@ class ProfileActivity : AppCompatActivity() {
         }
         notificationsBtn.setOnClickListener {
             startActivity(Intent(this, NotificationActivity::class.java))
+        }
+        signOutBtn.setOnClickListener {
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isloggedin", false)
+            editor.apply()
+            val intent = Intent(this, sign_page::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
