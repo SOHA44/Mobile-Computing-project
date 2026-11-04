@@ -34,6 +34,9 @@ class ProfileActivity : AppCompatActivity() {
         val itemBtn = findViewById<Button>(R.id.btn_view_all_items)
         val lostItemBtn = findViewById<Button>(R.id.btn_view_lost)
         val foundItemBtn = findViewById<Button>(R.id.btn_view_found)
+        val addClaimBtn = findViewById<Button>(R.id.btnAddClaim)
+        val recievedClaimsBtn = findViewById<Button>(R.id.btnRecievedClaims)
+        val notificationsBtn = findViewById<RelativeLayout>(R.id.notificationsProfile)
 
 
         lifecycleScope.launch {
@@ -66,6 +69,21 @@ class ProfileActivity : AppCompatActivity() {
             intent.putExtra("FILTER_TYPE", "MY_FOUND")
             intent.putExtra("userId", userId)
             startActivity(intent)
+        }
+
+        addClaimBtn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("FILTER_TYPE", "ALL_FOUND")
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+        recievedClaimsBtn.setOnClickListener {
+            val intent = Intent(this, ReceivedClaimsActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+        notificationsBtn.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
         }
 
     }
