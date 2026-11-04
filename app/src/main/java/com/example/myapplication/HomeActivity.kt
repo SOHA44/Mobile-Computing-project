@@ -29,12 +29,22 @@ class HomeActivity : AppCompatActivity() {
     private var currentuserId: Int = -1
     private var currentusetname: String = ""
 
+    private var currentFilterType: String = "ALL"
+
     override fun onResume() {
         super.onResume()
         val grid = findViewById<GridView>(R.id.gridView)
         lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(this@HomeActivity).itemDao().getAllItems()
+                val dao = AppDatabase.getInstance(this@HomeActivity).itemDao()
+
+                when (currentFilterType) {
+                    "MY_LOST" -> dao.getMyLostItems(currentuserId)
+                    "MY_FOUND" -> dao.getMyFoundItems(currentuserId)
+                    "ALL_FOUND" -> dao.getAllFoundItems()
+                    "ALL_LOST" -> dao.getAllLostItems()
+                    else -> dao.getAllItems()
+                }
             }
 
             val data = list.map {
@@ -106,6 +116,7 @@ class HomeActivity : AppCompatActivity() {
 
         currentuserId = intent.getIntExtra("userId", -1)
         currentusetname = intent.getStringExtra("userName") ?: ""
+        currentFilterType = intent.getStringExtra("FILTER_TYPE") ?: "ALL"
 
         val profile =findViewById<View>(R.id.profile)
         val log_out = findViewById<View>(R.id.logout)
@@ -160,6 +171,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         found.setOnClickListener {
+            currentFilterType = "ALL_FOUND"
             val grid = findViewById<GridView>(R.id.gridView)
             lifecycleScope.launch {
                 val list = withContext(Dispatchers.IO) {
@@ -226,6 +238,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         lost.setOnClickListener {
+            currentFilterType = "ALL_LOST"
             val grid = findViewById<GridView>(R.id.gridView)
             lifecycleScope.launch {
                 val list = withContext(Dispatchers.IO) {
@@ -294,6 +307,7 @@ class HomeActivity : AppCompatActivity() {
 
         all.setOnClickListener {
             onResume()
+            currentFilterType = "ALL"
             all.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
             all.setTextColor(Color.WHITE)
             lost.backgroundTintList = ColorStateList.valueOf(Color.WHITE)

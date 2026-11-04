@@ -328,10 +328,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="6dp"
-                android:layout_marginBottom="19dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_toEndOf="@+id/textView16"
-                android:text="If you believe an item belongs to you."
+                android:text="If you believe an item belongs to you select it"
                 android:textColor="#B1A8A8"
                 android:textSize="12dp" />
 

@@ -1,7 +1,12 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +31,11 @@ class ProfileActivity : AppCompatActivity() {
         var email: String ="";
         var phoneNumber: String = "";
         var faculty: String="";
+        val itemBtn = findViewById<Button>(R.id.btn_view_all_items)
+        val lostItemBtn = findViewById<Button>(R.id.btn_view_lost)
+        val foundItemBtn = findViewById<Button>(R.id.btn_view_found)
+
+
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val user = db.userDao().getUser(userId)
@@ -40,7 +50,24 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.tvProfEmail).text = email
             findViewById<TextView>(R.id.tvProfFaculty).text = faculty
         }
+        itemBtn.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
+        lostItemBtn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("FILTER_TYPE", "MY_LOST")
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+
+        foundItemBtn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("FILTER_TYPE", "MY_FOUND")
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+
     }
-
-
 }
+

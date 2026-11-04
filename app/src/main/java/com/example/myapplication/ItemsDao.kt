@@ -19,6 +19,12 @@ interface ItemsDao{
     @Query("SELECT * FROM items WHERE type='lost'")
     suspend fun getAllLostItems (): List<Items>
 
+    @Query("SELECT * FROM items WHERE type = 'lost' AND ownerUserId = :userId")
+    suspend fun getMyLostItems(userId: Int): List<Items>
+
+    @Query("SELECT * FROM items WHERE type = 'found' AND ownerUserId = :userId")
+    suspend fun getMyFoundItems(userId: Int): List<Items>
+
     @Query("SELECT * FROM items WHERE id = :itemId")
     suspend fun getItemById(itemId: Int): Items?
 
