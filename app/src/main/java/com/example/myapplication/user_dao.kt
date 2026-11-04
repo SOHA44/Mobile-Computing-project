@@ -18,6 +18,15 @@ interface  user_dao {
     suspend fun getUser(id: Int): User?
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("UPDATE users SET name = :name WHERE id = :id")
+    suspend fun updateName(id: Int, name: String)
+
+    @Query("UPDATE users SET phoneNumber = :phoneNumber WHERE id = :id")
+    suspend fun updatePhoneNumber(id: Int, phoneNumber: String)
+
+    @Query("UPDATE users SET password = :password WHERE id = :id")
+    suspend fun updatePassword(id: Int, password: String)
     @Delete
     suspend fun deleteUser(user: User)
 }

@@ -89,6 +89,7 @@ class ProfileActivity : AppCompatActivity() {
         updateProfileBtn.setOnClickListener {
             val intent = Intent(this, UpdateProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
         signOutBtn.setOnClickListener {
             val editor = sharedPreferences.edit()
