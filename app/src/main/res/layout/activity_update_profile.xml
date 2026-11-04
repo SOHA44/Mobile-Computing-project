@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9F9FB"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
+            android:background="#4896D0FA">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="139dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="52dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp" />
+
+            <ImageButton
+                android:id="@+id/btnProfileImg"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_alignStart="@+id/profileImage"
+
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="74dp"
+                android:layout_marginLeft="95dp"
+                android:layout_marginBottom="48dp"
+                android:background="#05C5E5EB"
+                android:clickable="true"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:srcCompat="@drawable/ic_camera_black"
+                app:strokeWidth="2dp" />
+
+            <ImageButton
+                android:id="@+id/btnBackProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="128dp"
+                android:backgroundTint="#0196D0FA"
+                app:srcCompat="@drawable/outline_arrow_back_24" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUpdateName"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="sans-serif-medium"
+
+                android:text="User Name"
+                android:textColor="#142273"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/etUpdateName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#4896D0FA"
+                android:ems="10"
+                android:hint="name"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUpdatePhone"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="sans-serif-medium"
+
+                android:text="Phone Number"
+                android:textColor="#142273"
+
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#4896D0FA"
+                android:ems="10"
+                android:hint="01xxxxxxxxx"
+                android:inputType="phone"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="235dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCurrentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="sans-serif-medium"
+
+                android:text="Current Password"
+                android:textColor="#142273"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/etCurrentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#4896D0FA"
+                android:ems="10"
+                android:hint="old password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp" />
+
+
+            <TextView
+                android:id="@+id/tvNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="New Password"
+                android:textColor="#142273"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/etNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#4896D0FA"
+                android:ems="10"
+                android:hint="new password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tvConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="confirm Password"
+                android:textColor="#142273"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#4896D0FA"
+                android:ems="10"
+                android:hint="new password again"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#142273"
+            android:text="Submit"
+            android:textSize="18dp" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

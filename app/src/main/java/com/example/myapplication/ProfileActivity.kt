@@ -37,6 +37,7 @@ class ProfileActivity : AppCompatActivity() {
         val addClaimBtn = findViewById<Button>(R.id.btnAddClaim)
         val recievedClaimsBtn = findViewById<Button>(R.id.btnRecievedClaims)
         val notificationsBtn = findViewById<RelativeLayout>(R.id.notificationsProfile)
+        val updateProfileBtn = findViewById<RelativeLayout>(R.id.updateProfile)
         val signOutBtn = findViewById<RelativeLayout>(R.id.signOutProfile)
         
         lifecycleScope.launch {
@@ -84,6 +85,10 @@ class ProfileActivity : AppCompatActivity() {
         }
         notificationsBtn.setOnClickListener {
             startActivity(Intent(this, NotificationActivity::class.java))
+        }
+        updateProfileBtn.setOnClickListener {
+            val intent = Intent(this, UpdateProfileActivity::class.java)
+            startActivity(intent)
         }
         signOutBtn.setOnClickListener {
             val editor = sharedPreferences.edit()
