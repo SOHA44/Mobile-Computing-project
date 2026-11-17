@@ -56,19 +56,34 @@ class ClaimActivity : AppCompatActivity() {
                 submitButton.isEnabled = false
                 lifecycleScope.launch {
                     try {
-                        withContext(Dispatchers.IO) { val db = AppDatabase.getInstance(this@ClaimActivity)
+                        withContext(Dispatchers.IO) {
+                            val db = AppDatabase.getInstance(this@ClaimActivity)
                             // 1. Save the claim
-                            val claim = Claim(itemId = itemId, claimantUserId = userId, claimantName = userName, message = message)
+                            val claim = Claim(
+                                itemId = itemId,
+                                claimantUserId = userId,
+                                claimantName = userName,
+                                message = message
+                            )
                             db.claimDao().insertClaim(claim)
-                            // 2. Notify the owner of the item
-                            val notification = NotificationEntity(
+                            // 2. Notify the claimant
+                            val claimantNotification = NotificationEntity(
+                                userId = userId,
+                                title = "Claim Submitted Successfully",
+                                message = "Your claim for '${item.name}' has been submitted. Please wait for the owner's response.",
+                                type = "CLAIM_SUBMITTED",
+                                itemId = itemId
+                            )
+                            db.notificationDao().insertNotification(claimantNotification)
+                            // 3. Notify the item owner
+                            val ownerNotification = NotificationEntity(
                                 userId = item.ownerUserId,
                                 title = "New Claim Request",
-                                message = "$userName has requested your item: ${item.name}",
+                                message = "$userName has requested your item: ${item.name}. Please review the request.",
                                 type = "CLAIM_REQUEST",
                                 itemId = itemId
                             )
-                            db.notificationDao().insertNotification(notification)
+                            db.notificationDao().insertNotification(ownerNotification)
                         }
                         Toast.makeText(
                             this@ClaimActivity, "Claim submitted successfully", Toast.LENGTH_SHORT).show()
