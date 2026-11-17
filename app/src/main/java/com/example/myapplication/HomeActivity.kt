@@ -123,11 +123,8 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        currentuserId = intent.getIntExtra("userId", -1)
-        currentusetname = intent.getStringExtra("userName") ?: ""
-        currentFilterType = intent.getStringExtra("FILTER_TYPE") ?: "ALL"
-
         val profile =findViewById<View>(R.id.profile)
+        val home =findViewById<View>(R.id.home)
         val log_out = findViewById<View>(R.id.logout)
         val notification =findViewById<View>(R.id.notification)
         notificationBadge = findViewById(R.id.notificationBadge)
@@ -139,7 +136,16 @@ class HomeActivity : AppCompatActivity() {
         val lost=findViewById<Button>(R.id.lost)
         val adding_item=findViewById<Button>(R.id.add)
 
+        currentuserId = intent.getIntExtra("userId", -1)
+        currentusetname = intent.getStringExtra("userName") ?: ""
+        currentFilterType = intent.getStringExtra("FILTER_TYPE") ?: "ALL"
 
+
+        if (currentFilterType == "MY_FOUND" || currentFilterType == "MY_LOST") {
+            all.visibility = View.GONE
+            found.visibility = View.GONE
+            lost.visibility = View.GONE
+        }
 
         profile.setOnClickListener {
            val profileActivity= Intent(this, ProfileActivity::class.java)
@@ -162,6 +168,20 @@ class HomeActivity : AppCompatActivity() {
             notificationIntent.putExtra("userId", currentuserId)
             notificationIntent.putExtra("userName", currentusetname)
             startActivity(notificationIntent)
+        }
+        home.setOnClickListener {
+            currentFilterType = "ALL"
+            onResume()
+
+            all.visibility = View.VISIBLE
+            found.visibility = View.VISIBLE
+            lost.visibility = View.VISIBLE
+            all.backgroundTintList = ColorStateList.valueOf("#1A73E8".toColorInt())
+            all.setTextColor(Color.WHITE)
+            lost.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            lost.setTextColor(Color.BLACK)
+            found.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            found.setTextColor(Color.BLACK)
         }
 
         receivedClaims.setOnClickListener {
