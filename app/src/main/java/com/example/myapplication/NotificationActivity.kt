@@ -1,5 +1,7 @@
+
 package com.example.myapplication
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -18,7 +20,6 @@ import kotlinx.coroutines.withContext
 class NotificationActivity : AppCompatActivity() {
 
     private lateinit var adapter: NotificationAdapter
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyView: TextView
     private lateinit var unreadCount: TextView
@@ -27,6 +28,7 @@ class NotificationActivity : AppCompatActivity() {
     private lateinit var unreadButton: Button
 
     private var userId: Int = -1
+    private var userName: String = ""
     private var showUnreadOnly = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,46 +37,71 @@ class NotificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notification)
 
         userId = intent.getIntExtra("userId", -1)
+        userName = intent.getStringExtra("userName") ?: ""
 
-        val backButton =
-            findViewById<ImageButton>(R.id.back_btn)
+        val backButton = findViewById<ImageButton>(R.id.back_btn)
 
-        recyclerView =
-            findViewById(R.id.notificationsRecyclerView)
+        recyclerView = findViewById(R.id.notificationsRecyclerView)
+        emptyView = findViewById(R.id.emptyNotifications)
+        unreadCount = findViewById(R.id.unreadCount)
 
-        emptyView =
-            findViewById(R.id.emptyNotifications)
-
-        unreadCount =
-            findViewById(R.id.unreadCount)
-
-        allButton =
-            findViewById(R.id.allNotifications)
-
-        unreadButton =
-            findViewById(R.id.unreadNotifications)
+        allButton = findViewById(R.id.allNotifications)
+        unreadButton = findViewById(R.id.unreadNotifications)
 
         adapter = NotificationAdapter { notification ->
 
             lifecycleScope.launch {
 
+                // Mark notification as read
                 withContext(Dispatchers.IO) {
-
-                    AppDatabase.getInstance(
-                        applicationContext
-                    ).notificationDao().markAsRead(
-                        notificationId = notification.id,
-                        userId = userId
-                    )
+                    AppDatabase.getInstance(applicationContext)
+                        .notificationDao()
+                        .markAsRead(
+                            notificationId = notification.id,
+                            userId = userId
+                        )
                 }
 
+                // Refresh unread count and list
                 loadNotifications()
+
+                // Navigate to the appropriate screen
+                when (notification.type) {
+
+                    "CLAIM_REQUEST" -> {
+                        val claimsIntent = Intent(
+                            this@NotificationActivity,
+                            ReceivedClaimsActivity::class.java
+                        )
+                        claimsIntent.putExtra("userId", userId)
+                        startActivity(claimsIntent)
+                    }
+
+                    "ITEM_ADDED",
+                    "CLAIM_SUBMITTED",
+                    "CLAIM_ACCEPTED",
+                    "CLAIM_REJECTED" -> {
+
+                        val itemId = notification.itemId
+
+                        if (itemId != null) {
+                            val itemIntent = Intent(
+                                this@NotificationActivity,
+                                ItemActivity::class.java
+                            )
+
+                            itemIntent.putExtra("itemId", itemId)
+                            itemIntent.putExtra("userId", userId)
+                            itemIntent.putExtra("userName", userName)
+
+                            startActivity(itemIntent)
+                        }
+                    }
+                }
             }
         }
 
-        recyclerView.layoutManager =
-            LinearLayoutManager(this)
-
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         backButton.setOnClickListener {
@@ -99,12 +126,9 @@ class NotificationActivity : AppCompatActivity() {
                 if (userId == -1) return@setOnClickListener
 
                 lifecycleScope.launch {
-
                     withContext(Dispatchers.IO) {
-
-                        AppDatabase.getInstance(
-                            applicationContext
-                        ).notificationDao()
+                        AppDatabase.getInstance(applicationContext)
+                            .notificationDao()
                             .markAllAsRead(userId)
                     }
 
@@ -136,16 +160,11 @@ class NotificationActivity : AppCompatActivity() {
         lifecycleScope.launch {
 
             val result = withContext(Dispatchers.IO) {
+                val dao = AppDatabase.getInstance(applicationContext)
+                    .notificationDao()
 
-                val dao = AppDatabase.getInstance(
-                    applicationContext
-                ).notificationDao()
-
-                val notifications =
-                    dao.getNotificationsForUser(userId)
-
-                val unread =
-                    dao.getUnreadCount(userId)
+                val notifications = dao.getNotificationsForUser(userId)
+                val unread = dao.getUnreadCount(userId)
 
                 Pair(notifications, unread)
             }

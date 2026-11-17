@@ -150,9 +150,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
         notification.setOnClickListener {
-
             val notificationIntent = Intent(this@HomeActivity, NotificationActivity::class.java)
             notificationIntent.putExtra("userId", currentuserId)
+            notificationIntent.putExtra("userName", currentusetname)
             startActivity(notificationIntent)
         }
 

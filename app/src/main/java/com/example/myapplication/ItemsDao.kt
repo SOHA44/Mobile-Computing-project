@@ -9,7 +9,7 @@ import androidx.room.Update
 @Dao
 interface ItemsDao{
     @Insert
-    suspend fun insertItem(item: Items)
+    suspend fun insertItem(item: Items): Long
     @Query("SELECT * FROM items")
     suspend fun getAllItems (): List<Items>
 

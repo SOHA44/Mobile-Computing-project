@@ -124,7 +124,9 @@ class ItemsActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     try {
                         withContext(Dispatchers.IO) {
-                            item_db.itemDao().insertItem(
+
+                            // Insert item and get its ID
+                            val insertedItemId = item_db.itemDao().insertItem(
                                 Items(
                                     name = item_name,
                                     description = item_description,
@@ -136,9 +138,17 @@ class ItemsActivity : AppCompatActivity() {
                                     type = item_type
                                 )
                             )
-                            //Create notification for the user
-                            val notification = NotificationEntity(userId = userId, title = "Item Added Successfully", message = "Your $item_type item '$item_name' has been added successfully.", type = "ITEM_ADDED")
-                            //Save notification in Room
+
+                            // Create notification linked to the inserted item
+                            val notification = NotificationEntity(
+                                userId = userId,
+                                title = "Item Added Successfully",
+                                message = "Your $item_type item '$item_name' has been added successfully.",
+                                type = "ITEM_ADDED",
+                                itemId = insertedItemId.toInt()
+                            )
+
+                            // Save notification
                             item_db.notificationDao().insertNotification(notification)
                         }
 
