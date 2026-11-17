@@ -30,9 +30,11 @@ class HomeActivity : AppCompatActivity() {
     private var currentusetname: String = ""
 
     private var currentFilterType: String = "ALL"
+    private lateinit var notificationBadge: TextView
 
     override fun onResume() {
         super.onResume()
+        updateNotificationBadge()
         val grid = findViewById<GridView>(R.id.gridView)
         lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
@@ -121,6 +123,7 @@ class HomeActivity : AppCompatActivity() {
         val profile =findViewById<View>(R.id.profile)
         val log_out = findViewById<View>(R.id.logout)
         val notification =findViewById<View>(R.id.notification)
+        notificationBadge = findViewById(R.id.notificationBadge)
         val receivedClaims =findViewById<View>(R.id.receivedClaims)
         val search =findViewById<EditText>(R.id.search)
 
@@ -319,5 +322,19 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+    }
+    private fun updateNotificationBadge() {
+        lifecycleScope.launch {
+            val unreadCount = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(this@HomeActivity).notificationDao().getUnreadCount(currentuserId)
+            }
+
+            if (unreadCount > 0) {
+                notificationBadge.text = if (unreadCount > 99) "99+" else unreadCount.toString()
+                notificationBadge.visibility = View.VISIBLE
+            } else {
+                notificationBadge.visibility = View.GONE
+            }
+        }
     }
 }
