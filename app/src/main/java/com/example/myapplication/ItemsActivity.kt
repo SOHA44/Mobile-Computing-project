@@ -120,18 +120,28 @@ class ItemsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener}
              else {
+
                 lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        item_db.itemDao().insertItem(
-                            Items(
-                                name = item_name,
-                                description = item_description,
-                                photo = photoPath,
-                                date = item_date,
-                                location = item_location,
-                                contactInfo = item_contact,
-                                ownerUserId = userId,
-                                type = item_type))}
+                    try {
+                        withContext(Dispatchers.IO) {
+                            item_db.itemDao().insertItem(
+                                Items(
+                                    name = item_name,
+                                    description = item_description,
+                                    photo = photoPath,
+                                    date = item_date,
+                                    location = item_location,
+                                    contactInfo = item_contact,
+                                    ownerUserId = userId,
+                                    type = item_type
+                                )
+                            )
+                            //Create notification for the user
+                            val notification = NotificationEntity(userId = userId, title = "Item Added Successfully", message = "Your $item_type item '$item_name' has been added successfully.", type = "ITEM_ADDED")
+                            //Save notification in Room
+                            item_db.notificationDao().insertNotification(notification)
+                        }
+
                         Toast.makeText(this@ItemsActivity, "Item saved successfully", Toast.LENGTH_SHORT).show()
                         name.text.clear()
                         description.text.clear()
@@ -142,8 +152,11 @@ class ItemsActivity : AppCompatActivity() {
                         photoPath = ""
                         image.setImageDrawable(null)
 
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@ItemsActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
-
             }
         }
         back.setOnClickListener { finish() }
