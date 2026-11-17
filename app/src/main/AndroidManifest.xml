@@ -82,6 +82,12 @@
             android:name=".UpdateProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SignActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sign"
+            android:theme="@style/Theme.MyApplication"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

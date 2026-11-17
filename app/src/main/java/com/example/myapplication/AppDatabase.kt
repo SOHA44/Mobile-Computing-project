@@ -43,7 +43,9 @@ abstract class AppDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this)
             {
                 INSTANCE ?: Room.databaseBuilder(context.applicationContext,AppDatabase::class.java, "app_database")
-                    .addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
+                    .addMigrations(MIGRATION_1_2)
+                    .fallbackToDestructiveMigration(true)
+                    .build().also { INSTANCE = it }
             }
         }
     }

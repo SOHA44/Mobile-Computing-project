@@ -29,11 +29,11 @@ class Welcome_page : AppCompatActivity() {
                 } else {
                     // Invalid saved session
                     shared_per.edit().putBoolean("isloggedin", false).apply()
-                    val intent = Intent(this, sign_page::class.java)
+                    val intent = Intent(this, SignActivity::class.java)
                     startActivity(intent)
                 }
             } else {
-                val intent = Intent(this, sign_page::class.java)
+                val intent = Intent(this, SignActivity::class.java)
                 startActivity(intent)
             }
 
