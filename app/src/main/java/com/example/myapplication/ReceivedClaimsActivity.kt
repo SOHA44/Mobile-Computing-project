@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.widget.Toast
 
 class ReceivedClaimsActivity : AppCompatActivity() {
 
@@ -125,12 +126,49 @@ class ReceivedClaimsActivity : AppCompatActivity() {
 
                         (view as Button).setOnClickListener {
                             lifecycleScope.launch {
-                                withContext(Dispatchers.IO){
-                                    val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
-                                    db.claimDao().updateClaimStatus(claim.id, "ACCEPTED")
-                                    db.claimDao().rejectOther(claim.itemId,claim.id)
+                                try {
+                                    withContext(Dispatchers.IO) {
+                                        val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
+                                        // 1. Get other pending claims for the same item
+                                        val otherPendingClaims = db.claimDao()
+                                            .getClaimsForItem(claim.itemId)
+                                            .filter { it.id != claim.id && it.status == "PENDING" }
+
+                                        // 2. Accept the selected claim
+                                        db.claimDao().updateClaimStatus(claim.id, "ACCEPTED")
+
+                                        // 3. Reject the other pending claims
+                                        db.claimDao().rejectOther(claim.itemId, claim.id)
+
+                                        // 4. Notify users whose claims were automatically rejected
+                                        for (otherClaim in otherPendingClaims) {
+                                            val notification = NotificationEntity(
+                                                userId = otherClaim.claimantUserId,
+                                                title = "Claim Rejected",
+                                                message = "Unfortunately, your claim for this item was rejected because another claim was accepted.",
+                                                type = "CLAIM_REJECTED",
+                                                itemId = otherClaim.itemId
+                                            )
+
+                                            db.notificationDao().insertNotification(notification)
+                                        }
+                                        // 5. Notify the user whose claim was accepted
+                                        val acceptedNotification = NotificationEntity(
+                                            userId = claim.claimantUserId,
+                                            title = "Claim Accepted",
+                                            message = "Good news! Your claim for this item has been accepted.",
+                                            type = "CLAIM_ACCEPTED",
+                                            itemId = claim.itemId
+                                        )
+
+                                        db.notificationDao().insertNotification(acceptedNotification)
+                                    }
+                                    Toast.makeText(this@ReceivedClaimsActivity, "Claim accepted successfully", Toast.LENGTH_SHORT).show()
+                                    recreate()
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        this@ReceivedClaimsActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                                 }
-                                recreate()
                             }
                         }
                         true
@@ -141,11 +179,32 @@ class ReceivedClaimsActivity : AppCompatActivity() {
 
                         (view as Button).setOnClickListener {
                             lifecycleScope.launch {
-                                withContext(Dispatchers.IO) {
-                                    val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
-                                    db.claimDao().updateClaimStatus(claim.id, "REJECTED")
+                                try {
+                                    withContext(Dispatchers.IO) {
+                                        val db = AppDatabase.getInstance(this@ReceivedClaimsActivity)
+
+                                        // 1. Update claim status
+                                        db.claimDao().updateClaimStatus(claim.id, "REJECTED")
+
+                                        // 2. Notify the claimant
+                                        val notification = NotificationEntity(
+                                            userId = claim.claimantUserId,
+                                            title = "Claim Rejected",
+                                            message = "Unfortunately, your claim for this item has been rejected.",
+                                            type = "CLAIM_REJECTED",
+                                            itemId = claim.itemId
+                                        )
+
+                                        db.notificationDao().insertNotification(notification)
+                                    }
+
+                                    Toast.makeText(
+                                        this@ReceivedClaimsActivity, "Claim rejected", Toast.LENGTH_SHORT).show()
+
+                                    recreate()
+                                } catch (e: Exception) {
+                                    Toast.makeText(this@ReceivedClaimsActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                                 }
-                                recreate()
                             }
                         }
                         true
