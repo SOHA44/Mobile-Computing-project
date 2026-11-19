@@ -13,6 +13,7 @@ data class User(
     val email: String,
     val password: String,
     val phoneNumber: String,
-    val faculty: String
+    val faculty: String,
+    val image: String? = null
 )
 

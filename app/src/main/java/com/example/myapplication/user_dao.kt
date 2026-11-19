@@ -27,6 +27,10 @@ interface  user_dao {
 
     @Query("UPDATE users SET password = :password WHERE id = :id")
     suspend fun updatePassword(id: Int, password: String)
+
+    @Query("UPDATE users SET image = :image WHERE id = :id")
+    suspend fun updateImage(id: Int, image: String)
+
     @Delete
     suspend fun deleteUser(user: User)
 }

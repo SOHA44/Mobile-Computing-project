@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [User::class, Items::class, Claim::class, NotificationEntity::class], version = 2)
+@Database(entities = [User::class, Items::class, Claim::class, NotificationEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): user_dao
     abstract fun itemDao(): ItemsDao
@@ -36,6 +36,12 @@ abstract class AppDatabase : RoomDatabase() {
                     )
                     """.trimIndent()
                 )
+            }
+
+            val MIGRATION_2_3 = object : Migration(2, 3) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE users ADD COLUMN image TEXT")
+                }
             }
         }
         fun getInstance(context: Context): AppDatabase {

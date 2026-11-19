@@ -1,9 +1,11 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
+import java.io.File
 
 class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,8 @@ class ProfileActivity : AppCompatActivity() {
         val notificationsBtn = findViewById<RelativeLayout>(R.id.notificationsProfile)
         val updateProfileBtn = findViewById<RelativeLayout>(R.id.updateProfile)
         val signOutBtn = findViewById<RelativeLayout>(R.id.signOutProfile)
-        
+        val profImg = findViewById<ImageView>(R.id.UserImage)
+
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val user = db.userDao().getUser(userId)
@@ -48,12 +52,20 @@ class ProfileActivity : AppCompatActivity() {
                     email = user.email
                     phoneNumber = user.phoneNumber
                     faculty = user.faculty
+
+                    if (!user?.image.isNullOrEmpty()) {
+                        val uri = Uri.parse(user!!.image)
+                        profImg.setImageURI(uri)
+                    }
                 }
+
             }
             findViewById<TextView>(R.id.tvProfName).text = name
             findViewById<TextView>(R.id.tvProfEmail).text = email
             findViewById<TextView>(R.id.tvProfFaculty).text = faculty
         }
+
+
         itemBtn.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
@@ -84,7 +96,9 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
         notificationsBtn.setOnClickListener {
-            startActivity(Intent(this, NotificationActivity::class.java))
+            val intent = Intent(this, NotificationActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
         }
         updateProfileBtn.setOnClickListener {
             val intent = Intent(this, UpdateProfileActivity::class.java)
