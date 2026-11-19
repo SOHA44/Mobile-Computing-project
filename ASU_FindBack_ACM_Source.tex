@@ -1,0 +1,89 @@
+\documentclass[sigconf]{acmart}
+
+\title{ASU FindBack: An Android-Based Lost and Found Management System for Ain Shams University}
+
+\author{Khalid}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+\author{Soha}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+\author{Hoda}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+\author{Ahmed}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+\author{Sara}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+\author{Samaa}
+\affiliation{%
+  \institution{Faculty of Computer and Information Sciences, Ain Shams University}
+  \city{Cairo}
+  \country{Egypt}
+}
+
+\begin{abstract}
+Losing personal belongings is a common issue in university environments, where students, academic staff, and employees interact daily. Recovering lost belongings can be challenging when information about lost and found items is distributed across different communication channels or handled through unorganized procedures. This project presents ASU FindBack, an Android-based Lost and Found Management System designed for the university community at Ain Shams University. The application provides a centralized mobile platform for reporting lost and found belongings and managing requests to claim reported items. Its main functions include user registration and login, lost-item reporting, found-item reporting, item claiming, profile management, and notifications. Users can create accounts, access the application, submit information about missing or found belongings, and submit claims for items they believe belong to them. A profile component provides access to account information, while the notification component manages notification-related information. The system is implemented as a native Android application using Kotlin. Its project structure separates user-interface activities from data-management components. The visible data layer includes an AppDatabase class, entity classes, and Data Access Objects (DAOs) for users, items, claims, and notifications. The user DAO includes operations for inserting, querying, and updating user records. The application aims to make lost-and-found information easier to organize and access, support communication between members of the university community, and provide a more structured process for item recovery. The system is intended as a practical campus-focused mobile solution; its effectiveness will require evaluation through implementation testing and user feedback.
+\end{abstract}
+
+\ccsdesc[500]{Information systems~Information systems applications}
+\ccsdesc[300]{Human-centered computing~Mobile computing}
+\keywords{Lost and Found, Android Application, Kotlin, Room Database, Mobile Computing, Item Reporting, Item Claiming, User Authentication, Notifications}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+University campuses are active environments in which students, faculty members, and employees move between lectures, laboratories, offices, and shared facilities. During these activities, belongings such as phones, wallets, keys, and identification cards may be misplaced. Finding these items can be difficult when reports are scattered across informal communication channels or depend on individuals asking around. A centralized system can make reports more accessible and give users a consistent place to publish and review lost-and-found information. ASU FindBack is designed to address this need at Ain Shams University through an Android application that brings reporting and claiming functions together.
+
+\section{Problem Definition}
+The project addresses the lack of a unified, organized way for university members to report lost belongings, share information about found items, and request the return of an item. When information is distributed across different channels, users may not know where to search, and people who find belongings may have difficulty reaching their owners. ASU FindBack aims to reduce this fragmentation by providing a common application for these activities.
+
+\section{Proposed System}
+\subsection{User Authentication}
+Registration and login screens allow users to create an account and access the application.
+
+\subsection{Lost and Found Reporting}
+Users can report missing belongings and publish reports about items they have found, making item information available through the application.
+
+\subsection{Item Claiming}
+The claim functionality allows a user to submit a request for an item they believe belongs to them. The project structure also includes a screen for viewing received claims.
+
+\subsection{Profile and Notifications}
+The profile functionality provides access to user information and profile updates. Notification components are included to manage and present notification-related information.
+
+\section{System Implementation}
+ASU FindBack is developed as a native Android application using Kotlin. The visible application structure contains separate activities for the home screen, item handling, claims, profile management, and notifications. For persistence, the project includes an AppDatabase class and Room-style DAO and entity components. The User and user\_dao components manage user records; Items and ItemsDao are associated with item records; Claim and claim\_dao support claim data; and NotificationEntity and NotificationDao support notification data. The user DAO shown in the project includes an insertion operation for sign-up, query operations for sign-in and user validation, and update operations for user details. This organization separates database operations from screen-level functionality and provides a structured basis for maintaining application data.
+
+\section{Conclusion and Future Work}
+ASU FindBack proposes a centralized mobile approach to lost-and-found management at Ain Shams University. By combining account access, lost and found reports, item claims, profile management, and notifications, the application aims to make item recovery more organized and accessible for university members. Future work may include evaluating the application with students, improving search and item matching, adding image-based search, and refining notification and claim workflows based on user feedback.
+
+\begin{thebibliography}{9}
+\bibitem{android}
+Android Developers. \emph{Android Developers Documentation}. \url{https://developer.android.com/}.
+
+\bibitem{room}
+Android Developers. \emph{Save data in a local database using Room}. \url{https://developer.android.com/training/data-storage/room}.
+
+\bibitem{acm}
+Association for Computing Machinery. \emph{ACM Proceedings Template}. \url{https://www.acm.org/publications/proceedings-template}.
+\end{thebibliography}
+
+\end{document}
