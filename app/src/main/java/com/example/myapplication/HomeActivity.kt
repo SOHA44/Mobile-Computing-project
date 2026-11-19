@@ -33,9 +33,11 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var notificationBadge: TextView
 
 
-    private fun view(list: List<Items>){
+    private fun view(list: List<Items>, isSearchResult: Boolean = false){
 
         val grid = findViewById<GridView>(R.id.gridView)
+
+        grid.numColumns = if (isSearchResult) 1 else 2
 
         val data = list.map {
             mapOf("photo" to it.photo, "name" to it.name, "location" to it.location,"type" to it.type)
@@ -99,19 +101,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateNotificationBadge()
-        lifecycleScope.launch {
-            val list = withContext(Dispatchers.IO) {
-                val dao = AppDatabase.getInstance(this@HomeActivity).itemDao()
-                when (currentFilterType) {
-                    "MY_LOST" -> dao.getMyLostItems(currentuserId)
-                    "MY_FOUND" -> dao.getMyFoundItems(currentuserId)
-                    "ALL_FOUND" -> dao.getAllFoundItems()
-                    "ALL_LOST" -> dao.getAllLostItems()
-                    else -> dao.getAllItems()
-                }
-            }
-            view(list)
-        }
+
+        LoadItems()
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +122,8 @@ class HomeActivity : AppCompatActivity() {
         notificationBadge = findViewById(R.id.notificationBadge)
         val receivedClaims =findViewById<View>(R.id.receivedClaims)
         val search =findViewById<EditText>(R.id.search)
+        val searchButton =findViewById<Button>(R.id.searchButton)
+
 
         val all=findViewById<Button>(R.id.all)
         val found=findViewById<Button>(R.id.found)
@@ -233,6 +227,10 @@ class HomeActivity : AppCompatActivity() {
             found.setTextColor(Color.BLACK)
         }
 
+        searchButton.setOnClickListener {
+            val searchText = search.text.toString()
+            LoadItems(searchText)
+        }
 
     }
     private fun updateNotificationBadge() {
@@ -247,6 +245,27 @@ class HomeActivity : AppCompatActivity() {
             } else {
                 notificationBadge.visibility = View.GONE
             }
+        }
+    }
+
+    private fun LoadItems(searchText:String = ""){
+        lifecycleScope.launch {
+            val list = withContext(Dispatchers.IO){
+                val dao = AppDatabase.getInstance(this@HomeActivity).itemDao()
+
+                if(searchText.isNotEmpty()){
+                    dao.searchItems(searchText)
+                }else{
+                    when(currentFilterType){
+                        "MY_LOST" -> dao.getMyLostItems(currentuserId)
+                        "MY_FOUND" -> dao.getMyFoundItems(currentuserId)
+                        "ALL_FOUND" -> dao.getAllFoundItems()
+                        "ALL_LOST" -> dao.getAllLostItems()
+                        else -> dao.getAllItems()
+                    }
+                }
+            }
+            view(list,searchText.isNotEmpty())
         }
     }
 }
