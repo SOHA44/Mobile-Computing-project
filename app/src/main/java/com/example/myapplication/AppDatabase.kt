@@ -37,19 +37,20 @@ abstract class AppDatabase : RoomDatabase() {
                     """.trimIndent()
                 )
             }
+        }
 
-            val MIGRATION_2_3 = object : Migration(2, 3) {
-                override fun migrate(db: SupportSQLiteDatabase) {
-                    db.execSQL("ALTER TABLE users ADD COLUMN image TEXT")
-                }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE users ADD COLUMN image TEXT")
             }
         }
+
         fun getInstance(context: Context): AppDatabase {
 
             return INSTANCE ?: synchronized(this)
             {
                 INSTANCE ?: Room.databaseBuilder(context.applicationContext,AppDatabase::class.java, "app_database")
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .fallbackToDestructiveMigration(true)
                     .build().also { INSTANCE = it }
             }
